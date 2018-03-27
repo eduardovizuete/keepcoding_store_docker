@@ -1,0 +1,33 @@
+version: "3" # specify docker-compose version
+
+# Define the services/containers to be run
+services:
+
+  database_mongodb: # name of the third service
+    image: mongo # specify image to build container from
+    ports:
+      - "27017:27017" # specify port forewarding
+
+  backend_express: # name of the first service
+    # specify the directory of the Dockerfile
+    build: 
+      context: .
+      dockerfile: Dockerfile_backend
+    volumes:
+      - ./nodeApiFinal/nodeapi:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "3000:3000" # specify port forewarding
+    links:
+      - database_mongodb # link this service to the database service
+
+  frontend_angular: # name of the first service
+    # specify the directory of the Dockerfile
+    build: 
+      context: .
+      dockerfile: Dockerfile_frontend
+    volumes:
+      - ./angularStoreFinal:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "4200:4200" # specify port forewarding
