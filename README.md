@@ -10,25 +10,22 @@ Containers: mongodb, nodejs - express, angularjs
 ├── angularStoreFinal
 │   ├── package.json
 │   ├── README.md
-│   ├── src
+│   └── src
+│   │   ├── environments
+│   │   │   └── environment.ts
 ├── nodeApiFinal
 │   ├── nodeapi
-│   │   ├── index.md
-│   │   ├── package.json
+│   │   ├── lib
+│   │   │   ├── ...
+│   │   │   └── mongoConnection.js
+│   │   └── package.json
 │   └── README.md
 └── scripts
 │   ├── dev_backend_entrypoint.sh
 │   ├── development_backend.sh
 │   ├── development_frontend.sh
 │   └── dev_frontend_entrypoint.sh
-├── dockerbuildbackend.sh
-├── dockerbuildfrontend.sh
-├── docker-compose.yml
-├── Dockerfile_backend
-├── Dockerfile_frontend
-├── dockerrunbackend.sh
-├── dockerrunfrontend.sh
-├── dockerrunmongodb.sh
+└── docker-compose.yml
 ```
 
 
@@ -41,12 +38,22 @@ Containers: mongodb, nodejs - express, angularjs
 - Create directory angularStoreFinal into the root project
 - Download / clone frontend code from github repository into angularStoreFinal directory 
 https://github.com/eduardovizuete/angularStoreFinal.git  
+- Update connection to backend api service in file environment.ts with the name of service of ip number, example:
+
+```javascript
+apiEndpoint: 'http://10.32.0.26:3000',
+```
 
 ### Backend code
 
 - Create directory nodeApiFinal into the root project
 - Download / clone backend code from github repository into nodeApiFinal directory
 https://github.com/eduardovizuete/nodeApiFinal.git 
+- Update connection to database in file mongoConnection.js with the name of service of ip number, example:
+
+```javascript
+mongoose.connect('mongodb://database_mongodb:27017/productAPI', { useMongoClient: true });
+```
 
 ### Build and run containers
 
@@ -58,5 +65,6 @@ $ docker-compose up --build
 ## Test
 
 http://localhost:3000
+
 http://localhost:4200
 
